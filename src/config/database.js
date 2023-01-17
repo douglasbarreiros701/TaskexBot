@@ -7,7 +7,7 @@ class Database {
 
   connect() {
     const mongo_url =
-      "mongodb+srv://TasKexBot:QctYYHyVsjXlAsvu@cluster0.v8lk8co.mongodb.net/?retryWrites=true&w=majority";
+      "mongodb+srv://(usuario):(senha)@cluster0.v8lk8co.mongodb.net/?retryWrites=true&w=majority";
     console.log("Tentando conectar no banco de dados");
     mongoose
       .connect(mongo_url, {
