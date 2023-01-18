@@ -3,11 +3,11 @@ const config = require("./config.json");
 const fs = require("fs");
 const path = require("path");
 const mongoose = require("mongoose")
+// const configBot = require("./src/configBot")
 
 const Database = require("./src/config/database");
 db = new Database;
 mongoose.set("strictQuery", true);
-
 db.connect();
 
 const bot = new Discord.Client({
@@ -31,17 +31,21 @@ for (var filename of commandFiles) {
   bot.commands.set(command.name, command);
 }
 
+// configBot.bot(bot)
 /******************************************************************* */
 
-// config do bot
 bot.on("message", function (msg) {
   if (!msg.content.startsWith(prefix)) return;
   if (msg.author.bot) return;
 
-  const args = msg.content.slice(prefix.length).split();
+  const args = msg.content.split(" ").slice(1);
   console.log(args);
-  const command = args.shift();
 
+  const command = msg.content.split(" ").slice(0,1).shift().replace(prefix, "")
+
+  console.log(command)
+  const date = new Date()
+  console.log(date.toLocaleDateString())
   try {
     bot.commands.get(command).execute(bot, msg, args);
   } catch (err) {
