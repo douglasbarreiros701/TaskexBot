@@ -3,7 +3,8 @@ const config = require("./config.json");
 const fs = require("fs");
 const path = require("path");
 const mongoose = require("mongoose")
-// const configBot = require("./src/configBot")
+ const commandFile = require("./routes")
+
 
 const Database = require("./src/config/database");
 db = new Database;
@@ -14,22 +15,24 @@ const bot = new Discord.Client({
   intents: [8],
 });
 
+
 bot.login(config.BOT_TOKEN);
-bot.commands = new Discord.Collection();
+
 
 const prefix = "!";
 
 // pasta commands
-const commandFiles = fs
-  .readdirSync(path.join(__dirname, "./src/commands/"))
-  .filter((filename) => filename.endsWith(".js"));
+// const commandFile = fs
+//   .readdirSync(path.join(__dirname, "./src/commands/"))
+//   .filter((filename) => filename.endsWith(".js"));
 
-console.log(commandFiles);
+// console.log(commandFile);
 
-for (var filename of commandFiles) {
-  const command = require(`./src/commands/${filename}`);
-  bot.commands.set(command.name, command);
-}
+// for (var filename of commandFile) {
+//   const command = require(`./src/commands/${filename}`);
+//   bot.commands.set(command.name, command);
+// }
+
 
 // configBot.bot(bot)
 /******************************************************************* */
@@ -39,7 +42,6 @@ bot.on("message", function (msg) {
   if (msg.author.bot) return;
 
   const args = msg.content.split(" ").slice(1);
-  console.log(args);
 
   const command = msg.content.split(" ").slice(0,1).shift().replace(prefix, "")
 
@@ -59,3 +61,5 @@ bot.on("message", function (msg) {
 bot.on("ready", () => {
   console.log(`Estou conectado como ${bot.user.username}`);
 });
+
+module.exports = bot.commands
