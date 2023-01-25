@@ -5,8 +5,9 @@ module.exports = new class TodoRepository {
         try{
             const newTask = await todoModel.create(data)
             return newTask
-        } catch {
+        } catch (err) {
             console.error('Não foi possível realizar a invocação no banco de dados.')
+            console.error(err)
         }
     }
 }
