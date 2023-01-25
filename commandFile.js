@@ -1,10 +1,10 @@
-const path = require("path")
 const fs = require("fs")
-const bot = require("./index")
-const Discord = require("discord.js")
+const path = require("path")
 
-bot.commands = new Discord.Collection();
-console.log(bot.commands)
+const discord = require("discord.js")
+const bot = require("./index")
+
+bot.commands = new discord.Collection();
 
 const commandFile = fs
   .readdirSync(path.join(__dirname, "./src/commands/"))
@@ -12,10 +12,8 @@ const commandFile = fs
 
 console.log(commandFile);
 
-for (var filename of commandFile) {
-
+for (const filename of commandFile) {
   const command = require(`./src/commands/${filename}`);
-  
   bot.commands.set(command.name, command);
 }
 
