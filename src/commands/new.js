@@ -8,7 +8,6 @@ const execute = (bot, msg, args) => {
   
   const discription = args[1]
   console.log(discription)
-  
 
   return msg.reply("Funcionando");
   

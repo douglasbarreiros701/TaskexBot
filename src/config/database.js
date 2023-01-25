@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const configDB = require("./configDB.json");
 
 class Database {
   constructor() {
@@ -6,8 +7,7 @@ class Database {
   }
 
   connect() {
-    const mongo_url =
-      "mongodb+srv://(usuario):(senha)@cluster0.v8lk8co.mongodb.net/?retryWrites=true&w=majority";
+    const mongo_url = configDB.MONGODB_CLOUD
     console.log("Tentando conectar no banco de dados");
     mongoose
       .connect(mongo_url, {
@@ -22,6 +22,6 @@ class Database {
   }
 }
 
-module.exports = Database;
+module.exports = new Database();
 
-// QctYYHyVsjXlAsvu | senha do mongoDBCLoud
+// TaskexBot701
