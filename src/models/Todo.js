@@ -2,12 +2,15 @@ const mongoose = require("mongoose")
 const dateOnly = require("mongoose-dateonly")(mongoose)
 
 const TodoSchema = new mongoose.Schema({
-    name: String,
+    title: String,
     discription: String,
+    author: {
+      _id: String,
+      nickname: String,
+    },
     createdAt: { type: Date, 
                  default: ()=>{date.now}},
-
-    date: { type: dateOnly,
+    dateExpiration: { type: dateOnly,
             required:true,
           },
 })
