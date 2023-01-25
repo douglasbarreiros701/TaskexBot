@@ -25,11 +25,14 @@ bot.on("message", function (msg) {
   if (!msg.content.startsWith(prefix)) return;
   if (msg.author.bot) return;
 
-  const args = msg.content.split(" ").slice(1);
+  const commandName = msg.content.match(/(?<=^\!)\w+/)
+  const args = msg.content.match(/(?<={)(?<key>\w+)=(?<value>(.(?<!}))+)/g);
 
-  const command = msg.content.split(" ").slice(0,1).shift().replace(prefix, "")
-
-  console.log(command)
+  if(!commandName) 
+    return msg.reply(`Parece que a sintaxe do comando está incorreta. 😐
+    Para escrever algum comando, utilize a sintaxe: !<commandName> [{<argument>}]`)
+  console.log(commandName)
+  console.log(args)
 
   const date = new Date()
   console.log(date.toLocaleDateString())
@@ -37,13 +40,11 @@ bot.on("message", function (msg) {
   const commands = require("./commandFile")
   
   try {
-    
-   const commandName = commands.get(command)
-   commandName.execute(bot, msg, args)
-    
+   const command = commands.get(commandName[0])
+   if(!command) return msg.reply('Ops! Eu ainda não conheço esse comando. 😕')
+   command.execute(bot, msg, args)
   } catch (err) {
     console.error(err);
-    return msg.reply("Ops! Ainda não conheço esse comando");
   }
 })
 
