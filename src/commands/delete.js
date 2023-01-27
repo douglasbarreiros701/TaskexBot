@@ -1,3 +1,4 @@
+const TodoRepository = require('../repositories/TodoRepository')
 
 const execute = async(bot,msg,args)=>{
     this.sintaxErrorMessage = `Parece que a sintaxe do comando está incorreta.
@@ -12,28 +13,27 @@ const execute = async(bot,msg,args)=>{
 
     const argsSplited = args.map((arg) => arg.split('='))
 
-    let data = {}
-  for(const [key, value] of argsSplited){
-    const initialChar = value[0]
-    data[key] = value.replace(/^\w/, initialChar.toUpperCase())
-  } 
+    if(argsSplited[0][0] !== "idDeleteTask"){
+      return msg.reply("A propriedade idDeleteTask não foi informada")
+    }
 
-  // Criar uma maneira do findByIdAndDelete(idDeleteTask) deletar a task especifica do usuario que está apagando sem apagar todas as tasks com o mesmo nome
+    const idDeleteTask = argsSplited[0][1]
 
-
-  data = {...data, author: {
-    _id: msg.author.id,
-    nickname: msg.author.username
-  }}
-
+    
   const result = await TodoRepository.delete(idDeleteTask)
   console.log(result)
-  if (!!result) return msg.reply(`
-  Tarefa deletada com sucesso! 😁
-  Título: ${result.title}
-  Autor: ${result.author.nickname}
-  Data de expiração: ${result.dateExpiration}`)
 
+  if (!!result) {
+     return msg.reply(`
+      Tarefa deletada com sucesso! 😁
+      Título: ${result.title}
+      Autor: ${result.author.nickname}
+      Data de expiração: ${result.dateExpiration}`)
+  } else {
+    return msg.reply(`
+      O id especificado não existe no banco de dados
+    `)
+  }
 }
 
 module.exports= {
