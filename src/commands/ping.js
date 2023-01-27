@@ -1,11 +1,9 @@
 const execute = (bot, msg, args) => {
-  return msg.reply("Pong");
-
-  
+  return msg.reply('Pong');
 };
 
 module.exports = {
-  name: "ping",
-  ping: "ping",
+  name: 'ping',
+  ping: 'ping',
   execute,
 };

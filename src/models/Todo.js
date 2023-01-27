@@ -1,27 +1,29 @@
-const mongoose = require("mongoose")
-const dateOnly = require("mongoose-dateonly")(mongoose)
+const mongoose = require('mongoose');
+const dateOnly = require('mongoose-dateonly')(mongoose);
 
 const TodoSchema = new mongoose.Schema({
-    title:{
+  title: {
+    type: String,
+    required: true,
+  },
+  discription: String,
+  author: {
+    _id: {
       type: String,
       required: true,
     },
-    discription: String,
-    author: {
-      _id: {
-        type: String,
-        required: true,
-      },
-      nickname: String,
+    nickname: String,
+  },
+  createdAt: {
+    type: Date,
+    default: () => {
+      new Date();
     },
-    createdAt:{
-      type: Date, 
-      default: ()=>{new Date()}
-    },
-    dateExpiration:{ 
-      type: dateOnly,
-      required: true,
-    },
-})
+  },
+  dateExpiration: {
+    type: dateOnly,
+    required: true,
+  },
+});
 
-module.exports = mongoose.model("Todo", TodoSchema)
+module.exports = mongoose.model('Todo', TodoSchema);
