@@ -12,8 +12,6 @@ module.exports = new class TodoRepository {
     }
 
     async delete(idDeleteTask){
-
-
         try{
             const deleteTask = await todoModel.findByIdAndDelete(idDeleteTask)
             if(!idDeleteTask){
