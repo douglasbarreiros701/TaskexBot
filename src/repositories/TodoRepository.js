@@ -10,4 +10,20 @@ module.exports = new class TodoRepository {
             console.error(err)
         }
     }
+
+    async delete(idDeleteTask){
+        try{
+            const deleteTask = await todoModel.findByIdAndDelete(idDeleteTask)
+            if(!idDeleteTask){
+                throw new Error("Id não foi recebido")
+            }
+            return deleteTask
+        }catch(err){
+            console.error('Não foi possível deletar a task no banco de dados')
+            console.error
+
+        }
+    }
 }
+
+//teste
